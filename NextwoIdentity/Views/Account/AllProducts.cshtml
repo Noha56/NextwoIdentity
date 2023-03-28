@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Product>
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager
+@{
+    ViewData["Title"] = "AllProducts";
+}
+
+<h1>AllProducts</h1>
+  @if (User.IsInRole("Admin"))
+            {
+<a asp-action="CreteProduct" class="btn btn-primary">Create</a>
+            }
+<table class="table table-bordered">
+    <tr>
+        <th>@Html.DisplayNameFor(m=>m.Name)</th>
+        <th>@Html.DisplayNameFor(m=>m.Price)</th>
+        <th><label>Category</label></th>
+        <th>Operations</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Category!.Name</td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-action="Details" class="btn btn-warning" asp-route-id="@item.Id"> Details </a>
+                    <a asp-action="EditProduct" class="btn btn-success" asp-route-id="@item.Id"> Edit</a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id"> Delete </a>
+                </td>
+            }
+            else
+            {
+                <td>
+                   <a asp-action="Details" class="btn btn-warning" asp-route-id="@item.Id"> Details </a>
+                </td>
+            }
+        </tr>
+    }
+
+</table>
+

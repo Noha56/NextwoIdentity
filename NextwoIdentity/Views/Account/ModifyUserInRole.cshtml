@@ -1,0 +1,50 @@
+﻿@model List<UserRoleViewModel>
+
+@{
+    ViewData["Title"] = "ModifyUserInRole";
+}
+
+<h1>Modify User In Role</h1>
+
+
+@*@foreach(var user in Model)
+{
+    <label>@user.UserName</label>
+
+    if (user.IsSelected==true)
+    {
+        <input type="checkbox" checked>
+        Model.Remove(user);
+    }
+    else
+    {
+        <input type="checkbox">
+    }
+    <br />
+}
+<a asp-action="" asp-controller="" class="btn btn-success">Save</a>
+<a asp-action="" asp-controller="" class="btn btn-danger">Cancel</a>
+*@
+
+<form method="post" asp-action="ModifyUserInRole" asp-controller="Account">
+
+    <div class="card">
+        <div class="card-header">
+            Users in this role
+        </div>
+        <div class="card-body">
+           
+            @for (int i=0; i < Model.Count;i++){
+                @Html.HiddenFor(m=>Model[i].UserId)
+                @Html.HiddenFor(m=>Model[i].UserName)
+
+                <input asp-for="@Model[i].IsSelected"/>
+                @Model[i].UserName <br />
+            }
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="RolesList" class="btn btn-danger">Cancel</a>
+        </div>
+    </div>
+</form>
